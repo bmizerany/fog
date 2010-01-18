@@ -100,7 +100,9 @@ module Fog
             options['Placement.AvailabilityZone'] = @availability_zone
           end
           if @group_id
-            options['SecurityGroup'] = @group_id
+            Array(@group_id).each_with_index do |group_id, n|
+              options["LaunchSpecification.SecurityGroup.#{n}"] = @group_id
+            end
           end
           if @kernel_id
             options['KernelId'] = @kernel_id
